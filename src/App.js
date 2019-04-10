@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 class App extends Component {
+
+constructor()
+{
+  super();
+  this.state={
+    data : [],
+  }
+  this.getdata();
+}
+
+getdata()
+{
+  let data= fetch('https://api.exchangeratesapi.io/latest?base=IDR').then((resp)=>{
+    resp.json().then((res) =>{ 
+      //console.log(res);
+      //this.setState({
+        //data: [res.rates]
+      //})
+      let tai = []
+      for(let item in res.rates){
+        tai.push({
+          name: item,
+          value: res.rates[item]
+        })
+        this.setState({
+          data: tai
+        })
+      }
+    })
+  })
+    
+}
+
   render() {
+    console.log(this.state.data)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+     <div>
+        {this.state.data.map(item =>
+          <p>{item.name} - {item.value}</p>
+
+          )}
       </div>
     );
   }
