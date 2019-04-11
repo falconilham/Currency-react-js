@@ -21,6 +21,8 @@ p{
   height: 30px;
   /*background-color: aquamarine;*/
   border: solid 1px;
+  display: flex;
+  justify-content: space-between;
 }
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
