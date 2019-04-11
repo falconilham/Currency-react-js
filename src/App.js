@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
 
@@ -15,10 +16,10 @@ getdata()
 {
   let data= fetch('https://api.exchangeratesapi.io/latest?base=IDR').then((resp)=>{
     resp.json().then((res) =>{ 
-      //console.log(res);
-      //this.setState({
-        //data: [res.rates]
-      //})
+      console.log(res.base);
+      this.setState({
+        data: [res.base]
+      })
       let tai = []
       for(let item in res.rates){
         tai.push({
@@ -35,14 +36,20 @@ getdata()
 }
 
   render() {
-    console.log(this.state.data)
     return (
-     <div>
+     <div className="container">
+      <div className="App">
+        <div className="header">
+          <h1>{this.state.data.base}</h1>
+        </div>
         {this.state.data.map(item =>
           <p>{item.name} - {item.value}</p>
 
           )}
+        
+        
       </div>
+    </div>
     );
   }
 }
