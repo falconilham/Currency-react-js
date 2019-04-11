@@ -8,11 +8,17 @@ constructor()
   super();
   this.state={
     data : [],
-    ratesdefault : "value" 
+    ratesdefault : 1 
   }
   this.getdata();
 }
-
+change(event){
+      let change = this.state.ratesdefault
+      change = event.target.value
+      this.setState({
+        ratesdefault: change
+      }) 
+        }
 getdata()
 {
   let data= fetch('https://api.exchangeratesapi.io/latest?base=USD').then((resp)=>{
@@ -27,11 +33,12 @@ getdata()
       for(let item in res.rates){
         tai.push({
           name: item,
-          value: res.rates[item]
+          value: res.rates[item],
         })
         this.setState({
           data: tai
         })
+        
       }
     })
   })    
@@ -46,11 +53,11 @@ getdata()
           {this.state.currentbase}
           </div>
           <div className="header-right">
-            <input type="number" placeholder={this.state.currentrates}/>
+            <input type="number" value={this.state.ratesdefault} onChange={this.change.bind(this)} placeholder={this.state.currentrates}/>
           </div>
         </div>
         {this.state.data.map(item =>
-          <p>{item.name} - {item.value * 2}</p>
+          <p>{item.name} - {item.value*this.state.ratesdefault}</p>
 
           )}
         
